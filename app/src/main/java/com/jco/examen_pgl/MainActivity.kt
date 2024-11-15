@@ -24,6 +24,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -41,14 +44,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jco.examen_pgl.ui.theme.Examen_PGLTheme
 
 class MainActivity : ComponentActivity() {
-    val background5=Color(0xFF9B9594)
-    val alumno5=Color(0xFFDD2C00)
+    val background5 = Color(0xFF9B9594)
+    val alumno5 = Color(0xFFDD2C00)
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,8 +64,8 @@ class MainActivity : ComponentActivity() {
                     topBar = {
                         CenterAlignedTopAppBar(
                             colors = topAppBarColors(
-                                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                titleContentColor = MaterialTheme.colorScheme.primary,
+                                containerColor = background5,
+                                titleContentColor = alumno5,
                             ),
                             title = {
                                 Text("Conversación Janey")
@@ -75,9 +79,9 @@ class MainActivity : ComponentActivity() {
                             .padding(innerPadding),
 
 
-
-                    ) {
+                        ) {
                         FichaAlumno()
+                        Boton()
                         Conversation(SampleData.conversationSample)
 
                     }
@@ -92,41 +96,64 @@ data class Message(val author: String, val body: String)
 
 @Composable
 fun FichaAlumno() {
-    val alumno5 = Color(0xFFDD2C00)
     val nombreAlumno = "Janey"
+    val imagenAlumno = R.drawable.avatar4
+    val colorBackground = Color.LightGray
 
-        Row (modifier = Modifier
+    Row(
+        modifier = Modifier
             .padding(10.dp)
-            .background(color = Color.LightGray)
+            .background(colorBackground)
             .fillMaxWidth()
+    )
+    {
+        Image(
+            painterResource(imagenAlumno),
+            contentDescription = "Foto perfil",
+            modifier = Modifier
+                .size(60.dp)
+                .clip(CircleShape)
+                .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
 
         )
-        {
-            Image(
-                painterResource(R.drawable.avatar4),
-                contentDescription = "Foto perfil",
-                modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape)
-                    .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
-
-            )
-            Column (modifier = Modifier.padding(10.dp)) {
-                Text(text = "Alumno: $nombreAlumno")
-                Text(text = "Soy un alumno")
-                Spacer(modifier = Modifier.height(4.dp))
+        Column(modifier = Modifier.padding(10.dp)) {
+            Text(text = "Alumno: $nombreAlumno")
+            Text(text = "Soy un alumno")
+            Spacer(modifier = Modifier.height(4.dp))
 
         }
     }
 }
 
 @Composable
-fun MessageCard(msg: com.jco.examen_pgl.Message) {
+fun Boton() {
+    val colorBoton = Color.Magenta
+    val listaColores= listOf(Color.Green, Color.Blue, Color.Red, Color.Cyan)
+    Column(
+        Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
 
+    ) {
+        Button(onClick = {  /*TODO*/ }, colors = ButtonDefaults.buttonColors(colorBoton)) {
+
+            Text(text = "Cambiar color")
+
+
+
+        }
+
+    }
+}
+
+@Composable
+fun MessageCard(msg: com.jco.examen_pgl.Message) {
+    val imagenProfesor = R.drawable.profesor
+    val colorDesplegado = Color.Magenta
+    val colorSinDesplegar = Color.LightGray
 
     Row(modifier = Modifier.padding(all = 8.dp)) {
         Image(
-            painterResource(R.drawable.profesor),
+            painterResource(imagenProfesor),
             contentDescription = "Foto perfil",
             modifier = Modifier
                 .size(40.dp)
@@ -138,7 +165,7 @@ fun MessageCard(msg: com.jco.examen_pgl.Message) {
 
         var isExpanded by remember { mutableStateOf(false) }
         val surfaceColor by animateColorAsState(
-            if (isExpanded) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.surface,
+            if (isExpanded) colorDesplegado else colorSinDesplegar,
         )
 
         Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
