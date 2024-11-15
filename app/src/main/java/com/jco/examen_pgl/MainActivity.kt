@@ -48,6 +48,7 @@ import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jco.examen_pgl.ui.theme.Examen_PGLTheme
 
 class MainActivity : ComponentActivity() {
@@ -117,7 +118,7 @@ fun FichaAlumno() {
 
         )
         Column(modifier = Modifier.padding(10.dp)) {
-            Text(text = "Alumno: $nombreAlumno")
+            Text(text = "Alumno: $nombreAlumno", fontSize = 26.sp)
             Text(text = "Soy un alumno")
             Spacer(modifier = Modifier.height(4.dp))
 
